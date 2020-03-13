@@ -5,10 +5,14 @@ object := $(patsubst %.cpp,%.o,$(wildcard *.cpp));
 cflag := -pthread -std=c++11
 
 
-all:main
+all:main client
 
-main:$(object)
-	g++ $(cflag) -o $@ $(object)
+main:main.o socketpar.o socketserver.o 
+	g++ $(cflag) -o $@ $^
+
+
+client:client.o socketpar.o socketclient.o
+	g++ $(cflag) -o $@ $^
 
 
 %.o:%.c
@@ -18,5 +22,7 @@ main:$(object)
 
 
 clean:
+	rm main
+	rm client
 	rm *.o
 
